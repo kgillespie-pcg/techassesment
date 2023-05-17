@@ -2,6 +2,11 @@
   <div>
     <h2>Dashboard</h2>
     <button @click="logout($router)">Logout</button>
+    <button @click.stop="$router.push('/owners')">View All Owners</button>
+    <button @click.stop="$router.push('/landholdings')">
+      View All Land Holdings
+    </button>
+    <button @click.stop="$router.push('/create-owner')">Create an Owner</button>
   </div>
 </template>
 
@@ -9,6 +14,7 @@
 import { useAuthStore } from "../store/AuthStore";
 
 export default {
+  name: "DashboardView",
   methods: {
     logout(router) {
       const authStore = useAuthStore();
