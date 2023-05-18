@@ -1,52 +1,50 @@
 <template>
-  <h1>Hello</h1>
+  <div>
+    <h1>Owner About View</h1>
+    <div v-if="owner">
+      <h2>Name: {{ owner.name }}</h2>
+      <p>Address: {{ owner.address }}</p>
+      <p>Owner Type:{{ owner.ownerType }}</p>
+      <p>Entity Type:{{ owner.entityType }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
-//import { conditionalExpression } from "@babel/types";
-//import { useOwnerStore } from "../store/ownerStore";
-//import { computed, onMounted } from "vue";
-//import { useRouter } from "vue-router";
+import { onMounted, reactive } from "vue";
+import { useOwnerStore } from "@/store/ownerStore";
+import { useRouter } from "vue-router";
 
 export default {
   name: "OwnerAboutView",
   setup() {
-    // Access the ownerStore
-    //const ownerStore = useOwnerStore();
-    // Access the Vue router
-    // const router = useRouter();
-    // Compute the ownerId from the current route parameters
-    //const ownerId = computed(() => router.currentRoute.value.params.id);
-    // Compute the owner from the ownerStore
-    //const owner = computed(() => ownerStore.owner);
-    // Fetch the owner data from the store or server
-    // const fetchOwner = async () => {
-    //   try {
-    //     // Call the getOwnerById action from the ownerStore and pass the ownerId
-    //     const fetchedOwner = await ownerStore.getOwnerById(ownerId.value);
-    //     console.log("check " + ownerId.value);
-    //     console.log(fetchedOwner);
-    //     //ownerStore.setOwner(fetchedOwner); // Set the fetched owner in the store
-    //   } catch (error) {
-    //     console.error("Failed to fetch owner:", error);
-    //   }
-    // };
-    // // Call fetchOwner when the component is mounted
-    // onMounted(() => {
-    //   fetchOwner();
-    // });
-    // // Return the owner computed property to be used in the template
-    // return {
-    //   owner,
-    // };
+    const ownerStore = useOwnerStore();
+    const owner = reactive({
+      name: null,
+      address: null,
+      ownerType: null,
+      entityType: null,
+    });
+    const router = useRouter();
+    const ownerId = router.currentRoute.value.params.id;
+    console.log("Owner ID On About Page:", ownerId);
+
+    onMounted(async () => {
+      try {
+        let retrievedOwner = await ownerStore.getOwnerById(ownerId);
+        //console.log(retrievedOwner);
+        owner.name = retrievedOwner.name;
+        owner.address = retrievedOwner.address;
+        owner.ownerType = retrievedOwner.ownerType;
+        owner.entityType = retrievedOwner.entityType;
+      } catch (error) {
+        console.error("Failed to get owner by ID:", error);
+      }
+    });
+
+    return {
+      owner,
+    };
   },
 };
 </script>
-
-<!-- <div v-if="owner">
-  <h1>{{ owner.name }}</h1>
-  <p>Address: {{ owner.address }}</p>
-  <p>Owner Type: {{ owner.ownerType }}</p>
-  <p>Entity Type: {{ owner.entityType }}</p>
-  Display other fields of the owner
-</div> -->

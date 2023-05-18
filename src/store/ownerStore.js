@@ -1,44 +1,89 @@
 import { defineStore } from 'pinia';
 import { realmApp } from '../realmService';
+import * as Realm from 'realm-web';
 
-// Define the owner store
+const {
+  BSON: { ObjectId },
+} = Realm;
 export const useOwnerStore = defineStore('owner', {
-  
+  state: () => ({
+    owners: [],
+    currentOwner: null,
+  }),
+  getters: {
+    getCurrentOwner(state) {
+      return state.currentOwner;
+    },
+  },
   actions: {
-     
+    async getOwnerById(ownerId) {
+      try {
+        console.log('Owner ID type:', typeof ownerId); 
+        const ownerCollection = realmApp
+          .currentUser.mongoClient('mongodb-atlas')
+          .db('Kamary')
+          .collection('Owners');
+    console.log(ownerCollection)
+    let query = ObjectId(ownerId)
+        const owner = await ownerCollection.findOne({ _id: query });
+        console.log('Fetched owner:', owner); 
+        return owner;
+      } catch (error) {
+        console.error('Failed to get owner by ID:', error);
+        throw error;
+      }
+    },
+    async getAllOwners(ownerId) {
+      try {
+        console.log('Owner ID type:', typeof ownerId); 
+    
+        const ownerCollection = realmApp
+          .currentUser.mongoClient('mongodb-atlas')
+          .db('Kamary')
+          .collection('Owners');
+    console.log(ownerCollection)
+    let query = ObjectId(ownerId)
+   
+        const owner = await ownerCollection.findOne({ _id: query });
+  
+        console.log('Fetched owner:', owner); 
+    
+      
+    
+        return owner;
+      } catch (error) {
+        console.error('Failed to get owner by ID:', error);
+        throw error;
+      }
+    },
+    
+    
 
     async createOwner(owner) {
       try {
         const newOwner = {
-          // Create a new owner object
           name: owner.name,
           address: owner.address,
           ownerType: owner.ownerType,
           entityType: owner.entityType,
-          LandHoldings: []
+          LandHoldings: [],
         };
-        
+
         const ownerCollection = realmApp
-        .currentUser.mongoClient('mongodb-atlas')
-        .db('Kamary')
-        .collection('Owners');
-        
-        // Insert the new owner document into the owners collection
+          .currentUser.mongoClient('mongodb-atlas')
+          .db('Kamary')
+          .collection('Owners');
+
         const insertedOwner = await ownerCollection.insertOne(newOwner);
-        const ownerId = insertedOwner.insertedId.toString(); // Extract the owner ID
-        
-        // Fetch the created owner from the database
-        //const createdOwner = await this.getOwnerById(ownerId);
+        const ownerId = insertedOwner.insertedId.toString();
+
         console.log(ownerId);
-        
-        //console.log("Newly created owner:", createdOwner);
-        
-        return { id: ownerId }; // Return the created owner object with the ID
+
+        return { id: ownerId };
       } catch (error) {
-        console.error("Failed to create owner - ownerStore:", error);
-        throw error; // Rethrow the error to be caught in the component
+        console.error('Failed to create owner:', error);
+        throw error;
       }
     },
- 
-   },
+  },
 });
