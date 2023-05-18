@@ -8,7 +8,7 @@ import LandHoldingsView from '../views/LandHoldingsView.vue'
 import LandHoldingAboutView from '../views/LandHoldingAboutView.vue'
 import CreateOwnerView from '../views/CreateOwnerView.vue'
 import CreateLandHoldingView from '../views/CreateLandHoldingView.vue'
-import { isAuthenticated } from '../realmService';
+import { useAuthStore } from '@/store/AuthStore' 
 
 const routes = [
   {
@@ -72,7 +72,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  const authenticatedCheck = isAuthenticated()
+  const authenticatedCheck = useAuthStore().isAuthenticated()
 
   if (requiresAuth && !authenticatedCheck) {
     next({ path: '/', replace: true });

@@ -19,7 +19,7 @@
 
 <script>
 import { useAuthStore } from "../store/AuthStore";
-import { createUser } from "../realmService";
+//import { createUser } from "../realmService";
 
 export default {
   data() {
@@ -36,10 +36,10 @@ export default {
       };
 
       // Save user to MongoDB
-      createUser(user);
 
       // Store user in the Pinia store
       const authStore = useAuthStore();
+      authStore.createUser(user);
       authStore.setUser(user);
 
       // Reset the form fields

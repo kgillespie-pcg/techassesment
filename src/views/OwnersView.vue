@@ -21,18 +21,21 @@
 
 <script>
 import { useOwnerStore } from "../store/ownerStore";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 
 export default {
   name: "OwnersView",
   setup() {
     const ownerStore = useOwnerStore();
-
     const searchQuery = ref("");
+
+    const owners = computed(() => {
+      return ownerStore.owners;
+    });
 
     const filteredOwners = computed(() => {
       const query = searchQuery.value.toLowerCase();
-      return ownerStore.owners.filter(
+      return owners.value.filter(
         (owner) =>
           owner.name.toLowerCase().includes(query) ||
           owner.address.toLowerCase().includes(query)
@@ -43,8 +46,13 @@ export default {
       this.$router.push(`/owners/${ownerId}`);
     };
 
+    onMounted(async () => {
+      await ownerStore.fetchAllOwners();
+    });
+
     return {
       searchQuery,
+      owners,
       filteredOwners,
       goToOwnerAboutPage,
     };

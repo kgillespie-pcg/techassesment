@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import { loginUser } from "../realmService";
+//import { loginUser } from "../realmService";
+import { useAuthStore } from "@/store/AuthStore";
 
 export default {
   data() {
@@ -31,8 +32,27 @@ export default {
         email: this.email,
         password: this.password,
       };
-      loginUser(user);
+      useAuthStore().loginUser(user);
     },
   },
 };
 </script>
+<style scoped>
+h2 {
+  margin-bottom: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label {
+  font-weight: bold;
+}
+
+button {
+  padding: 0.5rem 1rem;
+}
+</style>
