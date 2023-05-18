@@ -104,14 +104,15 @@ export default {
 
     const createOwner = async () => {
       try {
-        const createdOwner = await ownerStore.createOwner(owner);
+        const createdOwner = await ownerStore.createOwner(owner.value);
+        //console.log(createdOwner.name);
         const ownerId = createdOwner.id;
 
-        //Redirect to the owner's detail view
+        // Redirect to the owner's detail view
         router.replace({ name: "OwnerAboutView", params: { id: ownerId } });
         console.log(createdOwner);
       } catch (error) {
-        console.error("Failed to create owner:", error);
+        console.error("Failed to create owner - vue:", error);
       }
     };
 
