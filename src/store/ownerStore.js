@@ -33,24 +33,23 @@ export const useOwnerStore = defineStore('owner', {
         throw error;
       }
     },
-    async getAllOwners(ownerId) {
+    async getAllOwners() {
       try {
-        console.log('Owner ID type:', typeof ownerId); 
     
         const ownerCollection = realmApp
           .currentUser.mongoClient('mongodb-atlas')
           .db('Kamary')
           .collection('Owners');
-    console.log(ownerCollection)
-    let query = ObjectId(ownerId)
+    //console.log(ownerCollection)
    
-        const owner = await ownerCollection.findOne({ _id: query });
+        const owners = await ownerCollection.find();
+        this.owners=owners
   
-        console.log('Fetched owner:', owner); 
+        console.log('Fetched owner:', owners); 
     
       
     
-        return owner;
+        return owners;
       } catch (error) {
         console.error('Failed to get owner by ID:', error);
         throw error;
