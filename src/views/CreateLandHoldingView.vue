@@ -2,19 +2,13 @@
   <div>
     <h1>Create Land Holding</h1>
     <form @submit.prevent="createLandHolding">
-      <label for="name">Name:</label>
-      <input type="text" id="name" v-model="landHolding.name" required />
-
-      <label for="sectionName">Section Name:</label>
+      <label for="legalEntity">Legal Entity:</label>
       <input
         type="text"
-        id="sectionName"
-        v-model="landHolding.sectionName"
+        id="legalEntity"
+        v-model="landHolding.legalEntity"
         required
       />
-
-      <label for="ownerId">Owner ID:</label>
-      <input type="text" id="ownerId" v-model="landHolding.ownerId" required />
 
       <button type="submit">Create</button>
     </form>
@@ -22,22 +16,34 @@
 </template>
 
 <script>
-import { useLandHoldingStore } from "../store/landHoldingStore";
+import { useLandHoldingStore } from "@/store/landHoldingStore";
 import { ref } from "vue";
+//import { useRouter } from "vue-router";
 
 export default {
   name: "CreateLandHoldingView",
   setup() {
     const landHoldingStore = useLandHoldingStore();
     const landHolding = ref({
-      name: "",
-      sectionName: "",
-      ownerId: "",
+      legalEntity: "",
     });
+    //const router = useRouter();
 
-    const createLandHolding = () => {
-      landHoldingStore.createLandHolding(landHolding.value);
-      // Optionally, you can redirect to the land holding's detail view or any other page after creating the land holding
+    const createLandHolding = async () => {
+      try {
+        const createdLandHolding = await landHoldingStore.createLandHolding(
+          landHolding.value
+        );
+        //console.log(createdOwner.name);
+
+        //const landHoldingId = createdLandHolding.id;
+
+        // Redirect to the owner's detail view
+        //router.replace({ name: "OwnerAboutView", params: { id: ownerId } });
+        console.log(createdLandHolding);
+      } catch (error) {
+        console.error("Failed to create land holding - vue:", error);
+      }
     };
 
     return {
@@ -47,3 +53,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Add your custom styles here */
+</style>
