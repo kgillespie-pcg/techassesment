@@ -11,6 +11,7 @@
       <p>Range: {{ landHolding.range }}</p>
       <p>Title Source: {{ landHolding.titleSource }}</p>
       <p>Owner Id: {{ landHolding.ownerId }}</p>
+      <button @click="deleteLandHolding">Delete Land Holding</button>
       <router-link :to="`/owner/${landHolding.ownerId}`">
         <button>View Owner</button>
       </router-link>
@@ -40,9 +41,6 @@ export default {
     });
     const router = useRouter();
     const landHoldingId = router.currentRoute.value.params.id;
-    //const ownerId = router.currentRoute.value.params.ownerId; // Retrieve ownerId from route params
-    console.log("land holding ID On About Page:", landHoldingId);
-    //console.log("props ownerId On About Page:", props.ownerId);
 
     onMounted(async () => {
       try {
@@ -63,17 +61,21 @@ export default {
       }
     });
 
-    // const redirectToOwner = () => {
-    //   const ownerId = landHolding.ownerId;
-    //   router.push(`/owner/${ownerId}`);
-    // };
-    // const redirectToCreateLandholding = () => {
-    //   router.push(`/owners/${ownerId}/create-landholding`);
-    // };
+    const deleteLandHolding = async () => {
+      try {
+        await landHoldingStore.deleteLandHolding(
+          landHoldingId,
+          landHolding.ownerId
+        );
+        router.push(`/owner/${landHolding.ownerId}`);
+      } catch (error) {
+        console.error("Failed to delete landholding:", error);
+      }
+    };
 
     return {
       landHolding,
-      //redirectToCreateLandholding,
+      deleteLandHolding,
     };
   },
 };

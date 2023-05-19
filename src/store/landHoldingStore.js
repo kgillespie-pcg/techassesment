@@ -5,6 +5,15 @@ import * as Realm from "realm-web";
 const {
   BSON: { ObjectId },
 } = Realm;
+const landHoldingCollection = realmApp.currentUser
+  .mongoClient("mongodb-atlas")
+  .db("Kamary")
+  .collection("LandHoldings");
+
+const ownerCollection = realmApp.currentUser
+  .mongoClient("mongodb-atlas")
+  .db("Kamary")
+  .collection("Owners");
 export const useLandHoldingStore = defineStore("landHolding", {
   state: () => ({
     landHoldings: [],
@@ -28,16 +37,6 @@ export const useLandHoldingStore = defineStore("landHolding", {
           titleSource: landHolding.titleSource,
           ownerId: ownerId,
         };
-
-        const landHoldingCollection = realmApp.currentUser
-          .mongoClient("mongodb-atlas")
-          .db("Kamary")
-          .collection("LandHoldings");
-
-        const ownerCollection = realmApp.currentUser
-          .mongoClient("mongodb-atlas")
-          .db("Kamary")
-          .collection("Owners");
 
         const insertedLandHolding = await landHoldingCollection.insertOne(
           newLandHolding
@@ -68,10 +67,7 @@ export const useLandHoldingStore = defineStore("landHolding", {
     async getLandHoldingById(landHoldingId) {
       try {
         console.log("landholding ID type:", typeof landHoldingId);
-        const landHoldingCollection = realmApp.currentUser
-          .mongoClient("mongodb-atlas")
-          .db("Kamary")
-          .collection("LandHoldings");
+
         console.log(landHoldingCollection);
         let query = ObjectId(landHoldingId);
         const landHolding = await landHoldingCollection.findOne({ _id: query });
@@ -79,6 +75,33 @@ export const useLandHoldingStore = defineStore("landHolding", {
         return landHolding;
       } catch (error) {
         console.error("Failed to get landHolding by ID:", error);
+        throw error;
+      }
+    },
+    async deleteLandHolding(landHoldingId, ownerId) {
+      try {
+        // const landHoldingCollection = realmApp.currentUser
+        //   .mongoClient("mongodb-atlas")
+        //   .db("Kamary")
+        //   .collection("LandHoldings");
+
+        // const ownerCollection = realmApp.currentUser
+        //   .mongoClient("mongodb-atlas")
+        //   .db("Kamary")
+        //   .collection("Owners");
+
+        // Delete the landholding by ID
+        await landHoldingCollection.deleteOne({ _id: ObjectId(landHoldingId) });
+
+        // Remove the landholding ID from the owner's landHoldings array
+        await ownerCollection.updateOne(
+          { _id: ObjectId(ownerId) },
+          { $pull: { landHoldings: landHoldingId } }
+        );
+
+        return true; // Return a success indicator if needed
+      } catch (error) {
+        console.error("Failed to delete landHolding:", error);
         throw error;
       }
     },

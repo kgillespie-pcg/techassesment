@@ -5,6 +5,16 @@ import * as Realm from "realm-web";
 const {
   BSON: { ObjectId },
 } = Realm;
+
+const landHoldingCollection = realmApp.currentUser
+  .mongoClient("mongodb-atlas")
+  .db("Kamary")
+  .collection("LandHoldings");
+const ownerCollection = realmApp.currentUser
+  .mongoClient("mongodb-atlas")
+  .db("Kamary")
+  .collection("Owners");
+console.log(ownerCollection);
 export const useOwnerStore = defineStore("owner", {
   state: () => ({
     owners: [],
@@ -19,11 +29,6 @@ export const useOwnerStore = defineStore("owner", {
     async getOwnerById(ownerId) {
       try {
         console.log("Owner ID type:", typeof ownerId);
-        const ownerCollection = realmApp.currentUser
-          .mongoClient("mongodb-atlas")
-          .db("Kamary")
-          .collection("Owners");
-        console.log(ownerCollection);
         let query = ObjectId(ownerId);
         const owner = await ownerCollection.findOne({ _id: query });
         console.log("Fetched owner:", owner);
@@ -35,10 +40,6 @@ export const useOwnerStore = defineStore("owner", {
     },
     async getAllOwners() {
       try {
-        const ownerCollection = realmApp.currentUser
-          .mongoClient("mongodb-atlas")
-          .db("Kamary")
-          .collection("Owners");
         //console.log(ownerCollection)
 
         const owners = await ownerCollection.find();
@@ -63,11 +64,6 @@ export const useOwnerStore = defineStore("owner", {
           LandHoldings: [],
         };
 
-        const ownerCollection = realmApp.currentUser
-          .mongoClient("mongodb-atlas")
-          .db("Kamary")
-          .collection("Owners");
-
         const insertedOwner = await ownerCollection.insertOne(newOwner);
         const ownerId = insertedOwner.insertedId.toString();
 
@@ -76,6 +72,30 @@ export const useOwnerStore = defineStore("owner", {
         return { id: ownerId };
       } catch (error) {
         console.error("Failed to create owner:", error);
+        throw error;
+      }
+    },
+
+    async deleteOwner(ownerId) {
+      try {
+        const query = ObjectId(ownerId);
+
+        // Delete the owner
+        const deleteResult = await ownerCollection.deleteOne({ _id: query });
+        console.log("Deleted owner:", deleteResult);
+
+        // Delete all landholdings associated with the owner
+        await landHoldingCollection.deleteMany({ ownerId: ownerId });
+        console.log("Deleted associated landholdings");
+
+        // Remove the deleted owner from the owners array
+        this.owners = this.owners.filter(
+          (owner) => owner._id.toString() !== ownerId
+        );
+
+        return deleteResult;
+      } catch (error) {
+        console.error("Failed to delete owner:", error);
         throw error;
       }
     },

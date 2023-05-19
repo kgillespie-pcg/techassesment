@@ -6,6 +6,21 @@
       <p>Address: {{ owner.address }}</p>
       <p>Owner Type: {{ owner.ownerType }}</p>
       <p>Entity Type: {{ owner.entityType }}</p>
+      <p>Number of Land Holdings: {{ owner.landHoldings.length }}</p>
+      <div v-if="owner.landHoldings.length > 0">
+        <h3>Land Holdings:</h3>
+
+        <div v-for="landHolding in owner.landHoldings" :key="landHolding._id">
+          <p>Legal Entity: {{ landHolding.legalEntity }}</p>
+          <p>Mineral Owner Royalty: {{ landHolding.mineralOwnerRoyalty }}</p>
+          <p>Net Mineral Acres: {{ landHolding.netMineralAcres }}</p>
+          <!-- Add more properties as needed -->
+          <router-link :to="`/landholdings/${landHolding._id}`">
+            <button>View Land Holding</button>
+          </router-link>
+        </div>
+      </div>
+      <button @click="deleteOwnerAndRedirect">Delete Owner</button>
       <button @click="redirectToCreateLandholding">Create Landholding</button>
     </div>
   </div>
@@ -15,16 +30,19 @@
 import { onMounted, reactive } from "vue";
 import { useOwnerStore } from "@/store/ownerStore";
 import { useRouter } from "vue-router";
+import { useLandHoldingStore } from "@/store/landHoldingStore";
 
 export default {
   name: "OwnerAboutView",
   setup() {
     const ownerStore = useOwnerStore();
+    const landHoldingStore = useLandHoldingStore();
     const owner = reactive({
       name: null,
       address: null,
       ownerType: null,
       entityType: null,
+      landHoldings: [],
     });
     const router = useRouter();
     const ownerId = router.currentRoute.value.params.id;
@@ -37,10 +55,32 @@ export default {
         owner.address = retrievedOwner.address;
         owner.ownerType = retrievedOwner.ownerType;
         owner.entityType = retrievedOwner.entityType;
+
+        if (retrievedOwner.landHoldings.length > 0) {
+          // Fetch each landholding's data
+          const landHoldingPromises = retrievedOwner.landHoldings.map(
+            async (landHoldingId) => {
+              const landHolding = await landHoldingStore.getLandHoldingById(
+                landHoldingId
+              );
+              return landHolding;
+            }
+          );
+          owner.landHoldings = await Promise.all(landHoldingPromises);
+        }
       } catch (error) {
         console.error("Failed to get owner by ID:", error);
       }
     });
+
+    const deleteOwnerAndRedirect = async () => {
+      try {
+        await ownerStore.deleteOwner(ownerId);
+        router.push("/owners");
+      } catch (error) {
+        console.error("Failed to delete owner:", error);
+      }
+    };
 
     const redirectToCreateLandholding = () => {
       router.push(`/owners/${ownerId}/create-landholding`);
@@ -48,6 +88,7 @@ export default {
 
     return {
       owner,
+      deleteOwnerAndRedirect,
       redirectToCreateLandholding,
     };
   },
