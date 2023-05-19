@@ -26,6 +26,7 @@ export const useLandHoldingStore = defineStore("landHolding", {
           township: landHolding.township,
           range: landHolding.range,
           titleSource: landHolding.titleSource,
+          ownerId: ownerId,
         };
 
         const landHoldingCollection = realmApp.currentUser
@@ -47,15 +48,16 @@ export const useLandHoldingStore = defineStore("landHolding", {
         const query = ObjectId(ownerId);
         console.log("query ID type:", typeof query);
         // Push the landHoldingId to the landHoldings array of the owner
-        const findOwner = await ownerCollection.findOne({ _id: query });
+        //const findOwner = await ownerCollection.findOne({ _id: query });
         const updatedOwner = await ownerCollection.findOneAndUpdate(
           { _id: query },
           { $push: { landHoldings: landHoldingId } },
           { returnOriginal: false }
         );
 
-        console.log("Found Owner:", findOwner);
+        //console.log("Found Owner:", findOwner);
         console.log("Updated Owner:", updatedOwner);
+        console.log("inserted land Holding 2 ", newLandHolding);
 
         return { id: landHoldingId, ownerId };
       } catch (error) {

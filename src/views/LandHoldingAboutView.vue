@@ -10,6 +10,10 @@
       <p>Township: {{ landHolding.township }}</p>
       <p>Range: {{ landHolding.range }}</p>
       <p>Title Source: {{ landHolding.titleSource }}</p>
+      <p>Owner Id: {{ landHolding.ownerId }}</p>
+      <router-link :to="`/owner/${landHolding.ownerId}`">
+        <button>View Owner</button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -21,6 +25,7 @@ import { useRouter } from "vue-router";
 
 export default {
   name: "LandHoldingAboutView",
+
   setup() {
     const landHoldingStore = useLandHoldingStore();
     const landHolding = reactive({
@@ -31,10 +36,13 @@ export default {
       section: null,
       titleSource: null,
       township: null,
+      ownerId: null,
     });
     const router = useRouter();
     const landHoldingId = router.currentRoute.value.params.id;
+    //const ownerId = router.currentRoute.value.params.ownerId; // Retrieve ownerId from route params
     console.log("land holding ID On About Page:", landHoldingId);
+    //console.log("props ownerId On About Page:", props.ownerId);
 
     onMounted(async () => {
       try {
@@ -49,11 +57,16 @@ export default {
         landHolding.township = retrievedLandHolding.township;
         landHolding.range = retrievedLandHolding.range;
         landHolding.titleSource = retrievedLandHolding.titleSource;
+        landHolding.ownerId = retrievedLandHolding.ownerId;
       } catch (error) {
         console.error("Failed to get landholding by ID:", error);
       }
     });
 
+    // const redirectToOwner = () => {
+    //   const ownerId = landHolding.ownerId;
+    //   router.push(`/owner/${ownerId}`);
+    // };
     // const redirectToCreateLandholding = () => {
     //   router.push(`/owners/${ownerId}/create-landholding`);
     // };

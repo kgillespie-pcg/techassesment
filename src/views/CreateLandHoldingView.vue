@@ -106,6 +106,9 @@ export default {
   name: "CreateLandHoldingView",
   setup() {
     const landHoldingStore = useLandHoldingStore();
+    const router = useRouter();
+    const ownerId = router.currentRoute.value.params.id;
+    console.log("Owner ID On create land holding Page:", ownerId);
     const landHolding = ref({
       legalEntity: "",
       netMineralAcres: "",
@@ -114,10 +117,8 @@ export default {
       township: "",
       range: "",
       titleSource: "",
+      ownerId: ownerId,
     });
-    const router = useRouter();
-    const ownerId = router.currentRoute.value.params.id;
-    console.log("Owner ID On create land holding Page:", ownerId);
 
     const createLandHolding = async () => {
       try {
