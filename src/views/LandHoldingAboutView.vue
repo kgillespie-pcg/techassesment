@@ -1,59 +1,66 @@
 <template>
   <div>
-    <h1>{{ landHolding.name }}</h1>
-    <p>Section Name: {{ landHolding.sectionName }}</p>
-    <p>Owner: {{ landHolding.owner.name }}</p>
-    <button @click="deleteLandHolding(landHolding._id)">Delete</button>
-    <form @submit.prevent="updateLandHolding">
-      <!-- Update land holding form fields -->
-      <input type="text" v-model="updatedLandHolding.name" />
-      <input type="text" v-model="updatedLandHolding.sectionName" />
-      <button type="submit">Update</button>
-    </form>
+    <h1>Land Holding About View</h1>
+    <div v-if="landHolding">
+      <p>Legal Entity: {{ landHolding.legalEntity }}</p>
+      <p>Mineral Owner Royalty: {{ landHolding.mineralOwnerRoyalty }}</p>
+      <p>Net Mineral Acres: {{ landHolding.netMineralAcres }}</p>
+      <p>Range: {{ landHolding.range }}</p>
+      <p>Section: {{ landHolding.section }}</p>
+      <p>Township: {{ landHolding.township }}</p>
+      <p>Range: {{ landHolding.range }}</p>
+      <p>Title Source: {{ landHolding.titleSource }}</p>
+    </div>
   </div>
 </template>
 
 <script>
-import { useLandHoldingStore } from "../store/landHoldingStore";
-import { ref } from "vue";
+import { onMounted, reactive } from "vue";
+import { useLandHoldingStore } from "@/store/landHoldingStore";
+import { useRouter } from "vue-router";
 
 export default {
   name: "LandHoldingAboutView",
-  props: ["landHoldingId"],
-  setup(props) {
+  setup() {
     const landHoldingStore = useLandHoldingStore();
+    const landHolding = reactive({
+      legalEntity: null,
+      mineralOwnerRoyalty: null,
+      netMineralAcres: null,
+      range: null,
+      section: null,
+      titleSource: null,
+      township: null,
+    });
+    const router = useRouter();
+    const landHoldingId = router.currentRoute.value.params.id;
+    console.log("land holding ID On About Page:", landHoldingId);
 
-    const landHolding = ref(null);
-    const updatedLandHolding = ref(null);
+    onMounted(async () => {
+      try {
+        let retrievedLandHolding = await landHoldingStore.getLandHoldingById(
+          landHoldingId
+        );
+        landHolding.legalEntity = retrievedLandHolding.legalEntity;
+        landHolding.mineralOwnerRoyalty =
+          retrievedLandHolding.mineralOwnerRoyalty;
+        landHolding.netMineralAcres = retrievedLandHolding.netMineralAcres;
+        landHolding.section = retrievedLandHolding.section;
+        landHolding.township = retrievedLandHolding.township;
+        landHolding.range = retrievedLandHolding.range;
+        landHolding.titleSource = retrievedLandHolding.titleSource;
+      } catch (error) {
+        console.error("Failed to get landholding by ID:", error);
+      }
+    });
 
-    const fetchLandHolding = async () => {
-      landHolding.value = await landHoldingStore.getLandHoldingById(
-        props.landHoldingId
-      );
-      // Initialize the updatedLandHolding with a clone of the fetched land holding
-      updatedLandHolding.value = { ...landHolding.value };
-    };
-
-    const deleteLandHolding = async (landHoldingId) => {
-      await landHoldingStore.deleteLandHolding(landHoldingId);
-      // Redirect to the owner view
-      this.$router.push(`/owners/${landHolding.value.owner._id}`);
-    };
-
-    const updateLandHolding = async () => {
-      await landHoldingStore.updateLandHolding(updatedLandHolding.value);
-      // Fetch the updated land holding from the store
-      await fetchLandHolding();
-    };
-
-    // Fetch the land holding when the component is mounted
-    fetchLandHolding();
+    // const redirectToCreateLandholding = () => {
+    //   router.push(`/owners/${ownerId}/create-landholding`);
+    // };
 
     return {
       landHolding,
-      updatedLandHolding,
-      deleteLandHolding,
-      updateLandHolding,
+      //redirectToCreateLandholding,
     };
   },
 };
