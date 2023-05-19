@@ -4,8 +4,9 @@
     <div v-if="owner">
       <h2>Name: {{ owner.name }}</h2>
       <p>Address: {{ owner.address }}</p>
-      <p>Owner Type:{{ owner.ownerType }}</p>
-      <p>Entity Type:{{ owner.entityType }}</p>
+      <p>Owner Type: {{ owner.ownerType }}</p>
+      <p>Entity Type: {{ owner.entityType }}</p>
+      <button @click="redirectToCreateLandholding">Create Landholding</button>
     </div>
   </div>
 </template>
@@ -32,7 +33,6 @@ export default {
     onMounted(async () => {
       try {
         let retrievedOwner = await ownerStore.getOwnerById(ownerId);
-        //console.log(retrievedOwner);
         owner.name = retrievedOwner.name;
         owner.address = retrievedOwner.address;
         owner.ownerType = retrievedOwner.ownerType;
@@ -42,8 +42,13 @@ export default {
       }
     });
 
+    const redirectToCreateLandholding = () => {
+      router.push(`/owners/${ownerId}/create-landholding`);
+    };
+
     return {
       owner,
+      redirectToCreateLandholding,
     };
   },
 };
