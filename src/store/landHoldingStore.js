@@ -105,5 +105,18 @@ export const useLandHoldingStore = defineStore("landHolding", {
         throw error;
       }
     },
+    async getAllLandHoldings() {
+      try {
+        const landHoldings = await landHoldingCollection.find();
+        this.landHoldings = landHoldings;
+
+        console.log("Fetched landHoldings:", landHoldings);
+
+        return landHoldings;
+      } catch (error) {
+        console.error("Failed to get land holdings", error);
+        throw error;
+      }
+    },
   },
 });
