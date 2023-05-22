@@ -131,5 +131,28 @@ export const useLandHoldingStore = defineStore("landHolding", {
         throw error;
       }
     },
+    async updateLandHolding(landHoldingId, updatedLandHolding) {
+      try {
+        const landHoldingCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("LandHoldings");
+
+        const query = { _id: ObjectId(landHoldingId) };
+        const update = { $set: updatedLandHolding };
+
+        const updatedLandHoldingResult = await landHoldingCollection.updateOne(
+          query,
+          update
+        );
+
+        console.log("Updated Land Holding:", updatedLandHoldingResult);
+
+        return updatedLandHoldingResult;
+      } catch (error) {
+        console.error("Failed to update landHolding:", error);
+        throw error;
+      }
+    },
   },
 });

@@ -10,10 +10,14 @@
       <p>Township: {{ landHolding.township }}</p>
       <p>Range: {{ landHolding.range }}</p>
       <p>Title Source: {{ landHolding.titleSource }}</p>
+      <p>Id: {{ landHolding._id }}</p>
       <p>Owner Id: {{ landHolding.ownerId }}</p>
       <button @click="deleteLandHolding">Delete Land Holding</button>
       <router-link :to="`/owner/${landHolding.ownerId}`">
         <button>View Owner</button>
+      </router-link>
+      <router-link :to="`/update-landholding/${landHolding._id}`">
+        <button>Update Land Holding</button>
       </router-link>
     </div>
   </div>
@@ -56,6 +60,7 @@ export default {
         landHolding.range = retrievedLandHolding.range;
         landHolding.titleSource = retrievedLandHolding.titleSource;
         landHolding.ownerId = retrievedLandHolding.ownerId;
+        landHolding._id = retrievedLandHolding._id;
       } catch (error) {
         console.error("Failed to get landholding by ID:", error);
       }
