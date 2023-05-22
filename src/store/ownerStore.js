@@ -6,15 +6,6 @@ const {
   BSON: { ObjectId },
 } = Realm;
 
-const landHoldingCollection = realmApp.currentUser
-  .mongoClient("mongodb-atlas")
-  .db("Kamary")
-  .collection("LandHoldings");
-const ownerCollection = realmApp.currentUser
-  .mongoClient("mongodb-atlas")
-  .db("Kamary")
-  .collection("Owners");
-console.log(ownerCollection);
 export const useOwnerStore = defineStore("owner", {
   state: () => ({
     owners: [],
@@ -28,6 +19,11 @@ export const useOwnerStore = defineStore("owner", {
   actions: {
     async getOwnerById(ownerId) {
       try {
+        const ownerCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("Owners");
+        console.log(ownerCollection);
         console.log("Owner ID type:", typeof ownerId);
         let query = ObjectId(ownerId);
         const owner = await ownerCollection.findOne({ _id: query });
@@ -41,7 +37,11 @@ export const useOwnerStore = defineStore("owner", {
     async getAllOwners() {
       try {
         //console.log(ownerCollection)
-
+        const ownerCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("Owners");
+        console.log(ownerCollection);
         const owners = await ownerCollection.find();
         this.owners = owners;
 
@@ -56,6 +56,25 @@ export const useOwnerStore = defineStore("owner", {
 
     async createOwner(owner) {
       try {
+        const ownerCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("Owners");
+
+        // Check if an owner with the same name and address already exists
+        const existingOwner = await ownerCollection.findOne({
+          name: owner.name,
+          address: owner.address,
+        });
+
+        if (existingOwner) {
+          alert("Owner with the same name and address already exists");
+          throw new Error(
+            "Owner with the same name and address already exists"
+          );
+        }
+
+        console.log(ownerCollection);
         const newOwner = {
           name: owner.name,
           address: owner.address,
@@ -78,6 +97,15 @@ export const useOwnerStore = defineStore("owner", {
 
     async deleteOwner(ownerId) {
       try {
+        const ownerCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("Owners");
+        console.log(ownerCollection);
+        const landHoldingCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("LandHoldings");
         const query = ObjectId(ownerId);
 
         // Delete the owner

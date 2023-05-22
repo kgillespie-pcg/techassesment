@@ -7,9 +7,8 @@
       <p>Owner Type: {{ owner.ownerType }}</p>
       <p>Entity Type: {{ owner.entityType }}</p>
       <p>Number of Land Holdings: {{ owner.landHoldings.length }}</p>
+      <h3>Land Holdings:</h3>
       <div v-if="owner.landHoldings.length > 0">
-        <h3>Land Holdings:</h3>
-
         <div v-for="landHolding in owner.landHoldings" :key="landHolding._id">
           <p>Legal Entity: {{ landHolding.legalEntity }}</p>
           <p>Mineral Owner Royalty: {{ landHolding.mineralOwnerRoyalty }}</p>
@@ -19,6 +18,9 @@
             <button>View Land Holding</button>
           </router-link>
         </div>
+      </div>
+      <div v-else>
+        <p>This owner has no land holdings</p>
       </div>
       <button @click="deleteOwnerAndRedirect">Delete Owner</button>
       <button @click="redirectToCreateLandholding">Create Landholding</button>
@@ -56,7 +58,7 @@ export default {
         owner.ownerType = retrievedOwner.ownerType;
         owner.entityType = retrievedOwner.entityType;
 
-        if (retrievedOwner.landHoldings.length > 0) {
+        if (retrievedOwner.landHoldings) {
           // Fetch each landholding's data
           const landHoldingPromises = retrievedOwner.landHoldings.map(
             async (landHoldingId) => {

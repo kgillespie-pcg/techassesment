@@ -5,15 +5,6 @@ import * as Realm from "realm-web";
 const {
   BSON: { ObjectId },
 } = Realm;
-const landHoldingCollection = realmApp.currentUser
-  .mongoClient("mongodb-atlas")
-  .db("Kamary")
-  .collection("LandHoldings");
-
-const ownerCollection = realmApp.currentUser
-  .mongoClient("mongodb-atlas")
-  .db("Kamary")
-  .collection("Owners");
 export const useLandHoldingStore = defineStore("landHolding", {
   state: () => ({
     landHoldings: [],
@@ -27,6 +18,15 @@ export const useLandHoldingStore = defineStore("landHolding", {
   actions: {
     async createLandHolding(landHolding, ownerId) {
       try {
+        const landHoldingCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("LandHoldings");
+
+        const ownerCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("Owners");
         const newLandHolding = {
           legalEntity: landHolding.legalEntity,
           netMineralAcres: landHolding.netMineralAcres,
@@ -66,6 +66,10 @@ export const useLandHoldingStore = defineStore("landHolding", {
     },
     async getLandHoldingById(landHoldingId) {
       try {
+        const landHoldingCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("LandHoldings");
         console.log("landholding ID type:", typeof landHoldingId);
 
         console.log(landHoldingCollection);
@@ -80,15 +84,15 @@ export const useLandHoldingStore = defineStore("landHolding", {
     },
     async deleteLandHolding(landHoldingId, ownerId) {
       try {
-        // const landHoldingCollection = realmApp.currentUser
-        //   .mongoClient("mongodb-atlas")
-        //   .db("Kamary")
-        //   .collection("LandHoldings");
+        const landHoldingCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("LandHoldings");
 
-        // const ownerCollection = realmApp.currentUser
-        //   .mongoClient("mongodb-atlas")
-        //   .db("Kamary")
-        //   .collection("Owners");
+        const ownerCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("Owners");
 
         // Delete the landholding by ID
         await landHoldingCollection.deleteOne({ _id: ObjectId(landHoldingId) });
@@ -107,6 +111,10 @@ export const useLandHoldingStore = defineStore("landHolding", {
     },
     async getAllLandHoldings() {
       try {
+        const landHoldingCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("LandHoldings");
         const landHoldings = await landHoldingCollection.find();
         this.landHoldings = landHoldings;
 
