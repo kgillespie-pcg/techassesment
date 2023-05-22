@@ -18,7 +18,13 @@
           id="netMineralAcres"
           v-model="landHolding.netMineralAcres"
           required
+          pattern="[0-9]"
+          @invalid="showNumberError = true"
+          @input="showNumberError = false"
         />
+        <div v-if="showNumberError" style="color: red">
+          Input must be a number.
+        </div>
       </div>
       <div>
         <label for="mineralOwnerRoyalty">Mineral Owner Royalty:</label>
@@ -26,8 +32,14 @@
           type="text"
           id="mineralOwnerRoyalty"
           v-model="landHolding.mineralOwnerRoyalty"
+          pattern="[0-9]"
           required
+          @invalid="showNumberError2 = true"
+          @input="showNumberError2 = false"
         />
+        <div v-if="showNumberError2" style="color: red">
+          Input must be a number.
+        </div>
       </div>
       <div>
         <label for="section">Section:</label>
@@ -35,8 +47,14 @@
           type="text"
           id="section"
           v-model="landHolding.section"
+          pattern="[0-9]{3}"
           required
+          @invalid="showSectionError = true"
+          @input="showSectionError = false"
         />
+        <div v-if="showSectionError" style="color: red">
+          Section must be a 3-digit number.
+        </div>
       </div>
       <div>
         <label for="township">Township:</label>
@@ -44,12 +62,29 @@
           type="text"
           id="township"
           v-model="landHolding.township"
+          pattern="[0-9]{3}[nNsS]"
           required
+          @invalid="showTownshipError = true"
+          @input="showTownshipError = false"
         />
+        <div v-if="showTownshipError" style="color: red">
+          Township must be a 3-digit number followed by 'n' or 's'.
+        </div>
       </div>
       <div>
         <label for="range">Range:</label>
-        <input type="text" id="range" v-model="landHolding.range" required />
+        <input
+          type="text"
+          id="range"
+          v-model="landHolding.range"
+          pattern="[0-9]{3}[eEwW]"
+          required
+          @invalid="showRangeError = true"
+          @input="showRangeError = false"
+        />
+        <div v-if="showRangeError" style="color: red">
+          Range must be a 3-digit number followed by 'e' or 'w'.
+        </div>
       </div>
       <div>
         <label for="titleSource">Title Source:</label>
@@ -104,6 +139,7 @@ import { useRouter } from "vue-router";
 
 export default {
   name: "CreateLandHoldingView",
+
   setup() {
     const landHoldingStore = useLandHoldingStore();
     const router = useRouter();
@@ -120,6 +156,12 @@ export default {
       ownerId: ownerId,
     });
 
+    const showSectionError = ref(false);
+    const showTownshipError = ref(false);
+    const showRangeError = ref(false);
+    const showNumberError = ref(false);
+    const showNumberError2 = ref(false);
+
     const createLandHolding = async () => {
       try {
         const createdLandHolding = await landHoldingStore.createLandHolding(
@@ -130,7 +172,7 @@ export default {
         const landHoldingId = createdLandHolding.id;
         console.log(landHoldingId);
 
-        //Redirect to the land holding's detail view
+        // Redirect to the land holding's detail view
         router.replace({
           name: "landholding-about",
           params: { id: landHoldingId },
@@ -143,7 +185,12 @@ export default {
 
     return {
       landHolding,
+      showSectionError,
+      showTownshipError,
+      showRangeError,
       createLandHolding,
+      showNumberError,
+      showNumberError2,
     };
   },
 };
