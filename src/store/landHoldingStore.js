@@ -27,7 +27,13 @@ export const useLandHoldingStore = defineStore("landHolding", {
           .mongoClient("mongodb-atlas")
           .db("Kamary")
           .collection("Owners");
+
+        const sectionName = `${landHolding.township} - ${landHolding.section} - ${landHolding.range}`;
+        const name = `${sectionName} - ${landHolding.legalEntity}`;
+
         const newLandHolding = {
+          name: name,
+          sectionName: sectionName,
           legalEntity: landHolding.legalEntity,
           netMineralAcres: landHolding.netMineralAcres,
           mineralOwnerRoyalty: landHolding.mineralOwnerRoyalty,
@@ -46,17 +52,15 @@ export const useLandHoldingStore = defineStore("landHolding", {
         console.log("LandHolding ID:", landHoldingId);
         const query = ObjectId(ownerId);
         console.log("query ID type:", typeof query);
-        // Push the landHoldingId to the landHoldings array of the owner
-        //const findOwner = await ownerCollection.findOne({ _id: query });
+
         const updatedOwner = await ownerCollection.findOneAndUpdate(
           { _id: query },
           { $push: { landHoldings: landHoldingId } },
           { returnOriginal: false }
         );
 
-        //console.log("Found Owner:", findOwner);
         console.log("Updated Owner:", updatedOwner);
-        console.log("inserted land Holding 2 ", newLandHolding);
+        console.log("Inserted Land Holding:", newLandHolding);
 
         return { id: landHoldingId, ownerId };
       } catch (error) {
@@ -64,6 +68,7 @@ export const useLandHoldingStore = defineStore("landHolding", {
         throw error;
       }
     },
+
     async getLandHoldingById(landHoldingId) {
       try {
         const landHoldingCollection = realmApp.currentUser
