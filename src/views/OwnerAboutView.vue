@@ -24,6 +24,7 @@
       </div>
       <button @click="deleteOwnerAndRedirect">Delete Owner</button>
       <button @click="redirectToCreateLandholding">Create Landholding</button>
+      <button @click="redirectToUpdateOwner">Update Owner</button>
     </div>
   </div>
 </template>
@@ -87,11 +88,15 @@ export default {
     const redirectToCreateLandholding = () => {
       router.push(`/owners/${ownerId}/create-landholding`);
     };
+    const redirectToUpdateOwner = () => {
+      router.push(`/update-owner/${ownerId}`);
+    };
 
     return {
       owner,
       deleteOwnerAndRedirect,
       redirectToCreateLandholding,
+      redirectToUpdateOwner,
     };
   },
 };

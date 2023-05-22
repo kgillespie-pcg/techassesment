@@ -127,5 +127,33 @@ export const useOwnerStore = defineStore("owner", {
         throw error;
       }
     },
+    async setCurrentOwner(owner) {
+      this.currentOwner = owner;
+    },
+
+    async updateOwner(ownerId, updatedOwner) {
+      try {
+        const ownerCollection = realmApp.currentUser
+          .mongoClient("mongodb-atlas")
+          .db("Kamary")
+          .collection("Owners");
+
+        const query = { _id: ObjectId(ownerId) };
+        const update = { $set: updatedOwner };
+
+        const updateResult = await ownerCollection.updateOne(query, update);
+
+        if (updateResult.modifiedCount === 0) {
+          throw new Error(
+            "Failed to update owner. Owner not found or no changes were made."
+          );
+        }
+
+        return updateResult;
+      } catch (error) {
+        console.error("Failed to update owner:", error);
+        throw error;
+      }
+    },
   },
 });

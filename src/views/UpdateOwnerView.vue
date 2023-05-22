@@ -1,0 +1,92 @@
+<template>
+  <div>
+    <h1>Update Owner</h1>
+    <form @submit.prevent="updateOwner">
+      <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" v-model="updatedOwner.name" required />
+      </div>
+      <div>
+        <label for="address">Address:</label>
+        <input
+          type="text"
+          id="address"
+          v-model="updatedOwner.address"
+          required
+        />
+      </div>
+      <div>
+        <label for="ownerType">Owner Type:</label>
+        <input
+          type="text"
+          id="ownerType"
+          v-model="updatedOwner.ownerType"
+          required
+        />
+      </div>
+      <div>
+        <label for="entityType">Entity Type:</label>
+        <input
+          type="text"
+          id="entityType"
+          v-model="updatedOwner.entityType"
+          required
+        />
+      </div>
+      <button type="submit">Update</button>
+    </form>
+  </div>
+</template>
+
+<script>
+import { onMounted, reactive } from "vue";
+import { useOwnerStore } from "@/store/ownerStore";
+import { useRouter } from "vue-router";
+
+export default {
+  name: "UpdateOwnerView",
+  setup() {
+    const ownerStore = useOwnerStore();
+    const router = useRouter();
+    const ownerId = router.currentRoute.value.params.id;
+    console.log("Owner ID On Update Owner Page:", ownerId);
+
+    const updatedOwner = reactive({
+      name: null,
+      address: null,
+      ownerType: null,
+      entityType: null,
+    });
+
+    onMounted(async () => {
+      try {
+        let retrievedOwner = await ownerStore.getOwnerById(ownerId);
+        updatedOwner.name = retrievedOwner.name;
+        updatedOwner.address = retrievedOwner.address;
+        updatedOwner.ownerType = retrievedOwner.ownerType;
+        updatedOwner.entityType = retrievedOwner.entityType;
+      } catch (error) {
+        console.error("Failed to get owner by ID:", error);
+      }
+    });
+
+    const updateOwner = async () => {
+      try {
+        await ownerStore.updateOwner(ownerId, updatedOwner);
+        router.push(`/owner/${ownerId}`);
+      } catch (error) {
+        console.error("Failed to update owner:", error);
+      }
+    };
+
+    return {
+      updatedOwner,
+      updateOwner,
+    };
+  },
+};
+</script>
+
+<style scoped>
+/* Add your custom styles here */
+</style>
