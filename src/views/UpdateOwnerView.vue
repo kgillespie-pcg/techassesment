@@ -17,21 +17,83 @@
       </div>
       <div>
         <label for="ownerType">Owner Type:</label>
-        <input
-          type="text"
-          id="ownerType"
-          v-model="updatedOwner.ownerType"
-          required
-        />
+        <div>
+          <label>
+            <input
+              type="radio"
+              value="Competitor"
+              v-model="updatedOwner.ownerType"
+              required
+            />
+            Competitor
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="Seller"
+              v-model="updatedOwner.ownerType"
+              required
+            />
+            Seller
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="Investor"
+              v-model="updatedOwner.ownerType"
+              required
+            />
+            Investor
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="Professional"
+              v-model="updatedOwner.ownerType"
+              required
+            />
+            Professional
+          </label>
+        </div>
       </div>
       <div>
         <label for="entityType">Entity Type:</label>
-        <input
-          type="text"
-          id="entityType"
-          v-model="updatedOwner.entityType"
-          required
-        />
+        <label>
+          <input
+            type="radio"
+            value="Company"
+            v-model="updatedOwner.entityType"
+            required
+          />
+          Company
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="Individual"
+            v-model="updatedOwner.entityType"
+            required
+          />
+          Individual
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="Investor"
+            v-model="updatedOwner.entityType"
+            required
+          />
+          Investor
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="Trust"
+            v-model="updatedOwner.entityType"
+            required
+          />
+          Trust
+        </label>
       </div>
       <button type="submit">Update</button>
     </form>

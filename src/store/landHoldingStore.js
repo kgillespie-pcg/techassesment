@@ -138,11 +138,22 @@ export const useLandHoldingStore = defineStore("landHolding", {
           .db("Kamary")
           .collection("LandHoldings");
 
-        const query = { _id: ObjectId(landHoldingId) };
-        const update = { $set: updatedLandHolding };
+        const { township, section, range, legalEntity, ...rest } =
+          updatedLandHolding;
+
+        const sectionName = `${township} - ${section} - ${range}`;
+        const name = `${sectionName} - ${legalEntity}`;
+
+        const update = {
+          $set: {
+            ...rest,
+            name,
+            sectionName,
+          },
+        };
 
         const updatedLandHoldingResult = await landHoldingCollection.updateOne(
-          query,
+          { _id: ObjectId(landHoldingId) },
           update
         );
 

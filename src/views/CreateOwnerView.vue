@@ -13,7 +13,7 @@
         <label>
           <input
             type="radio"
-            value="competitor"
+            value="Competitor"
             v-model="owner.ownerType"
             required
           />
@@ -22,7 +22,7 @@
         <label>
           <input
             type="radio"
-            value="seller"
+            value="Seller"
             v-model="owner.ownerType"
             required
           />
@@ -31,7 +31,7 @@
         <label>
           <input
             type="radio"
-            value="investor"
+            value="Investor"
             v-model="owner.ownerType"
             required
           />
@@ -40,7 +40,7 @@
         <label>
           <input
             type="radio"
-            value="professional"
+            value="Professional"
             v-model="owner.ownerType"
             required
           />
@@ -52,7 +52,7 @@
       <label>
         <input
           type="radio"
-          value="company"
+          value="Company"
           v-model="owner.entityType"
           required
         />
@@ -61,7 +61,7 @@
       <label>
         <input
           type="radio"
-          value="individual"
+          value="Individual"
           v-model="owner.entityType"
           required
         />
@@ -70,14 +70,14 @@
       <label>
         <input
           type="radio"
-          value="investor"
+          value="Investor"
           v-model="owner.entityType"
           required
         />
         Investor
       </label>
       <label>
-        <input type="radio" value="trust" v-model="owner.entityType" required />
+        <input type="radio" value="Trust" v-model="owner.entityType" required />
         Trust
       </label>
       <button type="submit">Create</button>

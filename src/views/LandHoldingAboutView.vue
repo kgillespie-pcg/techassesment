@@ -2,6 +2,8 @@
   <div>
     <h1>Land Holding About View</h1>
     <div v-if="landHolding">
+      <p>Name: {{ landHolding.name }}</p>
+      <p>Section Name: {{ landHolding.sectionName }}</p>
       <p>Legal Entity: {{ landHolding.legalEntity }}</p>
       <p>Mineral Owner Royalty: {{ landHolding.mineralOwnerRoyalty }}</p>
       <p>Net Mineral Acres: {{ landHolding.netMineralAcres }}</p>
@@ -34,6 +36,8 @@ export default {
   setup() {
     const landHoldingStore = useLandHoldingStore();
     const landHolding = reactive({
+      name: null,
+      sectionName: null,
       legalEntity: null,
       mineralOwnerRoyalty: null,
       netMineralAcres: null,
@@ -51,6 +55,8 @@ export default {
         let retrievedLandHolding = await landHoldingStore.getLandHoldingById(
           landHoldingId
         );
+        landHolding.name = retrievedLandHolding.name;
+        landHolding.sectionName = retrievedLandHolding.sectionName;
         landHolding.legalEntity = retrievedLandHolding.legalEntity;
         landHolding.mineralOwnerRoyalty =
           retrievedLandHolding.mineralOwnerRoyalty;
