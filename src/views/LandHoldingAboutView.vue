@@ -1,4 +1,5 @@
 <template>
+  <DashboardView />
   <div>
     <h1>Land Holding About View</h1>
     <div v-if="landHolding">
@@ -29,10 +30,10 @@
 import { onMounted, reactive } from "vue";
 import { useLandHoldingStore } from "@/store/landHoldingStore";
 import { useRouter } from "vue-router";
+import DashboardView from "./DashboardView.vue";
 
 export default {
   name: "LandHoldingAboutView",
-
   setup() {
     const landHoldingStore = useLandHoldingStore();
     const landHolding = reactive({
@@ -49,7 +50,6 @@ export default {
     });
     const router = useRouter();
     const landHoldingId = router.currentRoute.value.params.id;
-
     onMounted(async () => {
       try {
         let retrievedLandHolding = await landHoldingStore.getLandHoldingById(
@@ -71,7 +71,6 @@ export default {
         console.error("Failed to get landholding by ID:", error);
       }
     });
-
     const deleteLandHolding = async () => {
       try {
         await landHoldingStore.deleteLandHolding(
@@ -83,11 +82,11 @@ export default {
         console.error("Failed to delete landholding:", error);
       }
     };
-
     return {
       landHolding,
       deleteLandHolding,
     };
   },
+  components: { DashboardView },
 };
 </script>

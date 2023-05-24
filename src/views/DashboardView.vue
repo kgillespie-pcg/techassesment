@@ -1,12 +1,13 @@
 <template>
   <div>
-    <h2>Dashboard</h2>
-    <button @click="logout($router)">Logout</button>
+    <h2>Phoenix Capital Group</h2>
+
     <button @click.stop="$router.push('/owners')">View All Owners</button>
     <button @click.stop="$router.push('/landholdings')">
       View All Land Holdings
     </button>
     <button @click.stop="$router.push('/create-owner')">Create an Owner</button>
+    <button @click="logout($router)">Logout</button>
   </div>
 </template>
 

@@ -1,4 +1,5 @@
 <template>
+  <DashboardView />
   <div>
     <h1>All Land holdings</h1>
     <div>
@@ -17,11 +18,13 @@
 import { useLandHoldingStore } from "../store/landHoldingStore";
 import { ref, onMounted } from "vue";
 import LandHoldingCard from "./../components/LandHoldingCard.vue";
+import DashboardView from "./DashboardView.vue";
 
 export default {
   name: "LandHoldingsView",
   components: {
     LandHoldingCard,
+    DashboardView,
   },
 
   setup() {

@@ -1,4 +1,5 @@
 <template>
+  <DashboardView />
   <div>
     <h1>Update Owner</h1>
     <form @submit.prevent="updateOwner">
@@ -95,7 +96,7 @@
           Trust
         </label>
       </div>
-      <button type="submit">Update</button>
+      <button class="button" type="submit">Update</button>
     </form>
   </div>
 </template>
@@ -104,6 +105,7 @@
 import { onMounted, reactive } from "vue";
 import { useOwnerStore } from "@/store/ownerStore";
 import { useRouter } from "vue-router";
+import DashboardView from "./DashboardView.vue";
 
 export default {
   name: "UpdateOwnerView",
@@ -112,14 +114,12 @@ export default {
     const router = useRouter();
     const ownerId = router.currentRoute.value.params.id;
     console.log("Owner ID On Update Owner Page:", ownerId);
-
     const updatedOwner = reactive({
       name: null,
       address: null,
       ownerType: null,
       entityType: null,
     });
-
     onMounted(async () => {
       try {
         let retrievedOwner = await ownerStore.getOwnerById(ownerId);
@@ -131,7 +131,6 @@ export default {
         console.error("Failed to get owner by ID:", error);
       }
     });
-
     const updateOwner = async () => {
       try {
         await ownerStore.updateOwner(ownerId, updatedOwner);
@@ -140,12 +139,12 @@ export default {
         console.error("Failed to update owner:", error);
       }
     };
-
     return {
       updatedOwner,
       updateOwner,
     };
   },
+  components: { DashboardView },
 };
 </script>
 

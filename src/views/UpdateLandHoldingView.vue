@@ -1,4 +1,5 @@
 <template>
+  <DashboardView />
   <div>
     <h1>Update Land Holding</h1>
     <form @submit.prevent="updateLandHolding">
@@ -127,7 +128,7 @@
           </label>
         </div>
       </div>
-      <button type="submit">Update</button>
+      <button class="button" type="submit">Update</button>
     </form>
   </div>
 </template>
@@ -136,6 +137,7 @@
 import { onMounted, reactive, ref } from "vue";
 import { useLandHoldingStore } from "@/store/landHoldingStore";
 import { useRouter } from "vue-router";
+import DashboardView from "./DashboardView.vue";
 
 export default {
   name: "UpdateLandHoldingView",
@@ -143,7 +145,6 @@ export default {
     const landHoldingStore = useLandHoldingStore();
     const router = useRouter();
     const landHoldingId = router.currentRoute.value.params.id;
-
     const updatedLandHolding = reactive({
       name: null,
       sectionName: null,
@@ -160,7 +161,6 @@ export default {
     const showRangeError = ref(false);
     const showNumberError = ref(false);
     const showNumberError2 = ref(false);
-
     onMounted(async () => {
       try {
         let retrievedLandHolding = await landHoldingStore.getLandHoldingById(
@@ -182,7 +182,6 @@ export default {
         console.error("Failed to get landholding by ID:", error);
       }
     });
-
     const updateLandHolding = async () => {
       try {
         if (
@@ -200,7 +199,6 @@ export default {
         console.error("Failed to update landholding:", error);
       }
     };
-
     return {
       updatedLandHolding,
       updateLandHolding,
@@ -211,6 +209,7 @@ export default {
       showNumberError2,
     };
   },
+  components: { DashboardView },
 };
 </script>
 

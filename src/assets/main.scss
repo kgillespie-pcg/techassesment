@@ -1,0 +1,84 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.form-question{
+  margin:1rem
+}
+
+button,
+.button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 500;
+  line-height: 1.25rem;
+  transition: background-color, border-color, color, fill, stroke 100ms cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #3b82f6;
+  color: #ffffff;
+  border-color: transparent;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+  &:hover {
+    background-color: #2563eb;
+  }
+
+  &:focus {
+    border-color: #3b82f6;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  }
+
+  &:active {
+    background-color: #1d4ed8;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+input {
+  //width: 100%;
+  padding: 0.75rem 0.75rem;
+  text-color: black;
+  placeholder-color: #ccc;
+  transition: background-color, border-color, color, fill, stroke 100ms cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  &:focus {
+    border-color: blue;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+label {
+  //width: 100%;
+  margin: 0.75rem 0.75rem;
+  text-color: black;
+  
+  background-color: #fff;
+
+ // box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  &:focus {
+    border-color: blue;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

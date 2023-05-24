@@ -1,4 +1,5 @@
 <template>
+  <DashboardView />
   <div>
     <h1>Create Land Holding</h1>
     <form @submit.prevent="createLandHolding">
@@ -136,10 +137,10 @@
 import { useLandHoldingStore } from "@/store/landHoldingStore";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import DashboardView from "./DashboardView.vue";
 
 export default {
   name: "CreateLandHoldingView",
-
   setup() {
     const landHoldingStore = useLandHoldingStore();
     const router = useRouter();
@@ -155,23 +156,19 @@ export default {
       titleSource: "",
       ownerId: ownerId,
     });
-
     const showSectionError = ref(false);
     const showTownshipError = ref(false);
     const showRangeError = ref(false);
     const showNumberError = ref(false);
     const showNumberError2 = ref(false);
-
     const createLandHolding = async () => {
       try {
         const createdLandHolding = await landHoldingStore.createLandHolding(
           landHolding.value,
           ownerId
         );
-
         const landHoldingId = createdLandHolding.id;
         console.log(landHoldingId);
-
         // Redirect to the land holding's detail view
         router.replace({
           name: "landholding-about",
@@ -182,7 +179,6 @@ export default {
         console.error("Failed to create land holding - vue:", error);
       }
     };
-
     return {
       landHolding,
       showSectionError,
@@ -193,6 +189,7 @@ export default {
       showNumberError2,
     };
   },
+  components: { DashboardView },
 };
 </script>
 

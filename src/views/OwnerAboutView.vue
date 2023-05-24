@@ -1,4 +1,5 @@
 <template>
+  <DashboardView />
   <div>
     <h1>Owner About View</h1>
     <div v-if="owner">
@@ -34,6 +35,7 @@ import { onMounted, reactive } from "vue";
 import { useOwnerStore } from "@/store/ownerStore";
 import { useRouter } from "vue-router";
 import { useLandHoldingStore } from "@/store/landHoldingStore";
+import DashboardView from "./DashboardView.vue";
 
 export default {
   name: "OwnerAboutView",
@@ -50,7 +52,6 @@ export default {
     const router = useRouter();
     const ownerId = router.currentRoute.value.params.id;
     console.log("Owner ID On About Page:", ownerId);
-
     onMounted(async () => {
       try {
         let retrievedOwner = await ownerStore.getOwnerById(ownerId);
@@ -58,7 +59,6 @@ export default {
         owner.address = retrievedOwner.address;
         owner.ownerType = retrievedOwner.ownerType;
         owner.entityType = retrievedOwner.entityType;
-
         if (retrievedOwner.landHoldings) {
           // Fetch each landholding's data
           const landHoldingPromises = retrievedOwner.landHoldings.map(
@@ -75,7 +75,6 @@ export default {
         console.error("Failed to get owner by ID:", error);
       }
     });
-
     const deleteOwnerAndRedirect = async () => {
       try {
         await ownerStore.deleteOwner(ownerId);
@@ -84,14 +83,12 @@ export default {
         console.error("Failed to delete owner:", error);
       }
     };
-
     const redirectToCreateLandholding = () => {
       router.push(`/owners/${ownerId}/create-landholding`);
     };
     const redirectToUpdateOwner = () => {
       router.push(`/update-owner/${ownerId}`);
     };
-
     return {
       owner,
       deleteOwnerAndRedirect,
@@ -99,5 +96,6 @@ export default {
       redirectToUpdateOwner,
     };
   },
+  components: { DashboardView },
 };
 </script>

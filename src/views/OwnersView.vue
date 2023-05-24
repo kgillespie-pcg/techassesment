@@ -1,4 +1,5 @@
 <template>
+  <DashboardView />
   <div>
     <h1>Card Container</h1>
     <div>
@@ -17,11 +18,13 @@
 import { useOwnerStore } from "../store/ownerStore";
 import { ref, onMounted } from "vue";
 import OwnerCard from "./../components/OwnerCard.vue";
+import DashboardView from "./DashboardView.vue";
 
 export default {
   name: "OwnersView",
   components: {
     OwnerCard,
+    DashboardView,
   },
 
   setup() {
