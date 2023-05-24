@@ -1,65 +1,75 @@
 <template>
   <DashboardView />
   <div>
-    <h1>Update Owner</h1>
+    <h2>Update An Owner</h2>
     <form @submit.prevent="updateOwner">
-      <div>
+      <div class="form-question">
         <label for="name">Name:</label>
-        <input type="text" id="name" v-model="updatedOwner.name" required />
-      </div>
-      <div>
-        <label for="address">Address:</label>
-        <input
-          type="text"
-          id="address"
-          v-model="updatedOwner.address"
-          required
-        />
-      </div>
-      <div>
-        <label for="ownerType">Owner Type:</label>
         <div>
-          <label>
-            <input
-              type="radio"
-              value="Competitor"
-              v-model="updatedOwner.ownerType"
-              required
-            />
-            Competitor
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Seller"
-              v-model="updatedOwner.ownerType"
-              required
-            />
-            Seller
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Investor"
-              v-model="updatedOwner.ownerType"
-              required
-            />
-            Investor
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Professional"
-              v-model="updatedOwner.ownerType"
-              required
-            />
-            Professional
-          </label>
+          <input
+            type="text"
+            id="name"
+            v-model="updatedOwner.name"
+            class="text-area"
+            required
+          />
         </div>
       </div>
-      <div>
+      <div class="form-question">
+        <label for="address">Address:</label>
+        <div>
+          <input
+            type="text"
+            id="address"
+            v-model="updatedOwner.address"
+            required
+            class="text-area"
+          />
+        </div>
+      </div>
+      <div class="form-question">
+        <label for="ownerType">Owner Type:</label>
+        <div>
+          <input
+            type="radio"
+            value="Competitor"
+            v-model="updatedOwner.ownerType"
+            required
+            placeholder="Competitor"
+          />
+          Competitor
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="Seller"
+            v-model="updatedOwner.ownerType"
+            required
+          />
+          Seller
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="Investor"
+            v-model="updatedOwner.ownerType"
+            required
+          />
+          Investor
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="Professional"
+            v-model="updatedOwner.ownerType"
+            required
+          />
+          Professional
+        </div>
+      </div>
+      <div class="form-question">
         <label for="entityType">Entity Type:</label>
-        <label>
+        <div>
           <input
             type="radio"
             value="Company"
@@ -67,8 +77,8 @@
             required
           />
           Company
-        </label>
-        <label>
+        </div>
+        <div>
           <input
             type="radio"
             value="Individual"
@@ -76,8 +86,8 @@
             required
           />
           Individual
-        </label>
-        <label>
+        </div>
+        <div>
           <input
             type="radio"
             value="Investor"
@@ -85,8 +95,8 @@
             required
           />
           Investor
-        </label>
-        <label>
+        </div>
+        <div>
           <input
             type="radio"
             value="Trust"
@@ -94,9 +104,9 @@
             required
           />
           Trust
-        </label>
+        </div>
       </div>
-      <button class="button" type="submit">Update</button>
+      <button type="submit" class="button">Update</button>
     </form>
   </div>
 </template>

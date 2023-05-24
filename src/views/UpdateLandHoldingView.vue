@@ -43,21 +43,6 @@
         </div>
       </div>
       <div>
-        <label for="range">Range:</label>
-        <input
-          type="text"
-          id="range"
-          v-model="updatedLandHolding.range"
-          pattern="[0-9]{3}[eEwW]"
-          required
-          @invalid="showRangeError = true"
-          @input="showRangeError = false"
-        />
-        <div v-if="showRangeError" style="color: red">
-          Range must be a 3-digit number followed by 'e' or 'w'.
-        </div>
-      </div>
-      <div>
         <label for="section">Section:</label>
         <input
           type="text"
@@ -84,7 +69,22 @@
           @input="showTownshipError = false"
         />
         <div v-if="showTownshipError" style="color: red">
-          Township must be a 3-digit number followed by 'n' or 's'.
+          Township must be a 3-digit number followed by 'N' or 'S'.
+        </div>
+      </div>
+      <div>
+        <label for="range">Range:</label>
+        <input
+          type="text"
+          id="range"
+          v-model="updatedLandHolding.range"
+          pattern="[0-9]{3}[eEwW]"
+          required
+          @invalid="showRangeError = true"
+          @input="showRangeError = false"
+        />
+        <div v-if="showRangeError" style="color: red">
+          Range must be a 3-digit number followed by 'E' or 'W'.
         </div>
       </div>
       <div>

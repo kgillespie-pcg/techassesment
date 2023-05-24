@@ -1,96 +1,108 @@
 <template>
   <DashboardView />
   <div>
-    <h1>Create An Owner</h1>
+    <h2>Create An Owner</h2>
     <form @submit.prevent="createOwner">
       <div class="form-question">
         <label for="name">Name:</label>
-        <input type="text" id="name" v-model="owner.name" required />
+
+        <input
+          type="text"
+          id="name"
+          v-model="owner.name"
+          class="text-area"
+          required
+        />
       </div>
       <div class="form-question">
         <label for="address">Address:</label>
-        <input type="text" id="address" v-model="owner.address" required />
+        <input
+          type="text"
+          id="address"
+          v-model="owner.address"
+          required
+          class="text-area"
+        />
       </div>
       <div class="form-question">
         <label for="ownerType">Owner Type:</label>
+
         <div>
-          <label>
-            <input
-              type="radio"
-              value="Competitor"
-              v-model="owner.ownerType"
-              required
-            />
-            Competitor
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Seller"
-              v-model="owner.ownerType"
-              required
-            />
-            Seller
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Investor"
-              v-model="owner.ownerType"
-              required
-            />
-            Investor
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Professional"
-              v-model="owner.ownerType"
-              required
-            />
-            Professional
-          </label>
+          <input
+            type="radio"
+            value="Competitor"
+            v-model="owner.ownerType"
+            required
+            placeholder="Competitor"
+          />
+          Competitor
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="Seller"
+            v-model="owner.ownerType"
+            required
+          />
+          Seller
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="Investor"
+            v-model="owner.ownerType"
+            required
+          />
+          Investor
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="Professional"
+            v-model="owner.ownerType"
+            required
+          />
+          Professional
         </div>
       </div>
       <div class="form-question">
         <label for="entityType">Entity Type:</label>
+
         <div>
-          <label>
-            <input
-              type="radio"
-              value="Company"
-              v-model="owner.entityType"
-              required
-            />
-            Company
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Individual"
-              v-model="owner.entityType"
-              required
-            />
-            Individual
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Investor"
-              v-model="owner.entityType"
-              required
-            />
-            Investor
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="Trust"
-              v-model="owner.entityType"
-              required
-            />
-            Trust
-          </label>
+          <input
+            type="radio"
+            value="Company"
+            v-model="owner.entityType"
+            required
+          />
+          Company
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="Individual"
+            v-model="owner.entityType"
+            required
+          />
+          Individual
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="Investor"
+            v-model="owner.entityType"
+            required
+          />
+          Investor
+        </div>
+        <div>
+          <input
+            type="radio"
+            value="Trust"
+            v-model="owner.entityType"
+            required
+          />
+          Trust
         </div>
       </div>
       <button type="submit" class="button">Create</button>
