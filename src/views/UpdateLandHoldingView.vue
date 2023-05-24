@@ -145,6 +145,8 @@ export default {
     const landHoldingId = router.currentRoute.value.params.id;
 
     const updatedLandHolding = reactive({
+      name: null,
+      sectionName: null,
       legalEntity: null,
       mineralOwnerRoyalty: null,
       netMineralAcres: null,
@@ -164,6 +166,8 @@ export default {
         let retrievedLandHolding = await landHoldingStore.getLandHoldingById(
           landHoldingId
         );
+        updatedLandHolding.name = retrievedLandHolding.name;
+        updatedLandHolding.sectionName = retrievedLandHolding.sectionName;
         updatedLandHolding.legalEntity = retrievedLandHolding.legalEntity;
         updatedLandHolding.mineralOwnerRoyalty =
           retrievedLandHolding.mineralOwnerRoyalty;
@@ -181,15 +185,22 @@ export default {
 
     const updateLandHolding = async () => {
       try {
-        await landHoldingStore.updateLandHolding(
-          landHoldingId,
-          updatedLandHolding
-        );
-        router.push(`/landholdings/${updatedLandHolding._id}`);
+        if (
+          updatedLandHolding.section &&
+          updatedLandHolding.township &&
+          updatedLandHolding.range
+        ) {
+          await landHoldingStore.updateLandHolding(
+            landHoldingId,
+            updatedLandHolding
+          );
+          router.push(`/landholdings/${updatedLandHolding._id}`);
+        }
       } catch (error) {
         console.error("Failed to update landholding:", error);
       }
     };
+
     return {
       updatedLandHolding,
       updateLandHolding,

@@ -138,28 +138,29 @@ export const useLandHoldingStore = defineStore("landHolding", {
           .db("Kamary")
           .collection("LandHoldings");
 
-        const { township, section, range, legalEntity, ...rest } =
-          updatedLandHolding;
+        const sectionName = `${updatedLandHolding.township} - ${updatedLandHolding.section} - ${updatedLandHolding.range}`;
+        const name = `${sectionName} - ${updatedLandHolding.legalEntity}`;
 
-        const sectionName = `${township} - ${section} - ${range}`;
-        const name = `${sectionName} - ${legalEntity}`;
-
-        const update = {
-          $set: {
-            ...rest,
-            name,
-            sectionName,
-          },
+        const updatedLandHoldingObj = {
+          name: name,
+          sectionName: sectionName,
+          legalEntity: updatedLandHolding.legalEntity,
+          mineralOwnerRoyalty: updatedLandHolding.mineralOwnerRoyalty,
+          netMineralAcres: updatedLandHolding.netMineralAcres,
+          range: updatedLandHolding.range,
+          section: updatedLandHolding.section,
+          township: updatedLandHolding.township,
+          titleSource: updatedLandHolding.titleSource,
         };
 
-        const updatedLandHoldingResult = await landHoldingCollection.updateOne(
+        await landHoldingCollection.updateOne(
           { _id: ObjectId(landHoldingId) },
-          update
+          { $set: updatedLandHoldingObj }
         );
 
-        console.log("Updated Land Holding:", updatedLandHoldingResult);
+        console.log("Updated Land Holding:", updatedLandHoldingObj);
 
-        return updatedLandHoldingResult;
+        return true; // Return a success indicator if needed
       } catch (error) {
         console.error("Failed to update landHolding:", error);
         throw error;

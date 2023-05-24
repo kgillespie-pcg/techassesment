@@ -7,7 +7,7 @@
       <p>Legal Entity: {{ landHolding.legalEntity }}</p>
       <p>Mineral Owner Royalty: {{ landHolding.mineralOwnerRoyalty }}</p>
       <p>Net Mineral Acres: {{ landHolding.netMineralAcres }}</p>
-      <p>Range: {{ landHolding.range }}</p>
+
       <p>Section: {{ landHolding.section }}</p>
       <p>Township: {{ landHolding.township }}</p>
       <p>Range: {{ landHolding.range }}</p>
