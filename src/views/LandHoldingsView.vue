@@ -1,9 +1,9 @@
 <template>
   <DashboardView />
   <div>
-    <h1>All Land holdings</h1>
+    <h2>Viewing All Land Holdings</h2>
     <div>
-      <div id="cards-container">
+      <div id="card-container">
         <LandHoldingCard
           v-for="landHolding in filteredLandHoldings"
           :key="landHolding.id"

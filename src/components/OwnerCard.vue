@@ -1,10 +1,12 @@
 <template>
   <div class="card">
-    <p><strong>Name:</strong> {{ owner.name }}</p>
-    <p><strong>Entity Type:</strong> {{ owner.entityType }}</p>
-    <p><strong>Address:</strong> {{ owner.address }}</p>
-    <p><strong>Owner Type:</strong> {{ owner.ownerType }}</p>
-    <p><strong>Owner id:</strong> {{ owner._id }}</p>
+    <div class="content">
+      <p><strong>Name:</strong> {{ owner.name }}</p>
+      <p><strong>Entity Type:</strong> {{ owner.entityType }}</p>
+      <p><strong>Address:</strong> {{ owner.address }}</p>
+      <p><strong>Owner Type:</strong> {{ owner.ownerType }}</p>
+    </div>
+
     <button @click="redirectToOwner">View Details</button>
   </div>
 </template>
@@ -26,12 +28,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.card {
-  border: 1px solid black;
-  padding: 10px;
-  margin-bottom: 10px;
-  color: pink;
-}
-</style>

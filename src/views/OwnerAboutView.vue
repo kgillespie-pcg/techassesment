@@ -1,31 +1,45 @@
 <template>
   <DashboardView />
   <div>
-    <h1>Owner About View</h1>
     <div v-if="owner">
-      <h2>Name: {{ owner.name }}</h2>
-      <p>Address: {{ owner.address }}</p>
-      <p>Owner Type: {{ owner.ownerType }}</p>
-      <p>Entity Type: {{ owner.entityType }}</p>
-      <p>Number of Land Holdings: {{ owner.landHoldings.length }}</p>
-      <h3>Land Holdings:</h3>
-      <div v-if="owner.landHoldings.length > 0">
-        <div v-for="landHolding in owner.landHoldings" :key="landHolding._id">
-          <p>Legal Entity: {{ landHolding.legalEntity }}</p>
-          <p>Mineral Owner Royalty: {{ landHolding.mineralOwnerRoyalty }}</p>
-          <p>Net Mineral Acres: {{ landHolding.netMineralAcres }}</p>
+      <h2>Viewing Owner: {{ owner.name }}</h2>
+      <div class="button-div">
+        <button @click="deleteOwnerAndRedirect">Delete Owner</button>
+        <button @click="redirectToCreateLandholding">Create Landholding</button>
+        <button @click="redirectToUpdateOwner">Update Owner</button>
+      </div>
+      <div class="about-card">
+        <p><span>Address: </span> {{ owner.address }}</p>
+        <p><span>Owner Type: </span> {{ owner.ownerType }}</p>
+        <p><span>Entity Type: </span> {{ owner.entityType }}</p>
+        <p>
+          <span>Number of Land Holdings: </span> {{ owner.landHoldings.length }}
+        </p>
+      </div>
+
+      <h2>Land Holdings:</h2>
+      <div class="card-container" v-if="owner.landHoldings.length > 0">
+        <div
+          class="card"
+          v-for="landHolding in owner.landHoldings"
+          :key="landHolding._id"
+        >
+          <div class="content">
+            <p>Name: {{ landHolding.name }}</p>
+            <!-- <p>Mineral Owner Royalty: {{ landHolding.mineralOwnerRoyalty }}</p>
+            <p>Net Mineral Acres: {{ landHolding.netMineralAcres }}</p> -->
+          </div>
           <!-- Add more properties as needed -->
-          <router-link :to="`/landholdings/${landHolding._id}`">
-            <button>View Land Holding</button>
-          </router-link>
+          <button>
+            <router-link :to="`/landholdings/${landHolding._id}`">
+              View Land Holding
+            </router-link>
+          </button>
         </div>
       </div>
       <div v-else>
         <p>This owner has no land holdings</p>
       </div>
-      <button @click="deleteOwnerAndRedirect">Delete Owner</button>
-      <button @click="redirectToCreateLandholding">Create Landholding</button>
-      <button @click="redirectToUpdateOwner">Update Owner</button>
     </div>
   </div>
 </template>

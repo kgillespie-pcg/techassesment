@@ -1,15 +1,20 @@
 <template>
   <div class="card">
-    <p><strong>Name:</strong> {{ landHolding.name }}</p>
-    <p><strong>Net Mineral Acres:</strong> {{ landHolding.netMineralAcres }}</p>
-    <p>
-      <strong>Mineral Owner Royalty:</strong>
-      {{ landHolding.mineralOwnerRoyalty }}
-    </p>
-    <p>
-      <strong>Title Source:</strong>
-      {{ landHolding.titleSource }}
-    </p>
+    <div class="content">
+      <p><strong>Name:</strong> {{ landHolding.name }}</p>
+      <p>
+        <strong>Net Mineral Acres:</strong> {{ landHolding.netMineralAcres }}
+      </p>
+      <p>
+        <strong>Mineral Owner Royalty:</strong>
+        {{ landHolding.mineralOwnerRoyalty }}
+      </p>
+      <p>
+        <strong>Title Source:</strong>
+        {{ landHolding.titleSource }}
+      </p>
+    </div>
+
     <button @click="redirectToLandHolding">View Details</button>
   </div>
 </template>
@@ -31,12 +36,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.card {
-  border: 1px solid black;
-  padding: 10px;
-  margin-bottom: 10px;
-  color: pink;
-}
-</style>

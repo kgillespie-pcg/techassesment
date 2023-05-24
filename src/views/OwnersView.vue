@@ -1,15 +1,13 @@
 <template>
   <DashboardView />
   <div>
-    <h1>Card Container</h1>
-    <div>
-      <div id="cards-container">
-        <OwnerCard
-          v-for="owner in filteredOwners"
-          :key="owner.id"
-          :owner="owner"
-        />
-      </div>
+    <h2>Viewing All Owners</h2>
+    <div id="card-container">
+      <OwnerCard
+        v-for="owner in filteredOwners"
+        :key="owner.id"
+        :owner="owner"
+      />
     </div>
   </div>
 </template>
@@ -50,18 +48,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-p {
-  color: orange;
-}
-
-/* .card {
-  border: 1px solid black;
-  padding: 10px;
-  margin-bottom: 10px;
-  color: red;
-} */
-/* #cards-container {
-  border: 1px solid black;
-} */
-</style>

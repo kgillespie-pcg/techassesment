@@ -11,7 +11,7 @@
         <input type="password" id="password" v-model="password" required />
       </div>
       <div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" class="button">Sign Up</button>
       </div>
     </form>
   </div>
