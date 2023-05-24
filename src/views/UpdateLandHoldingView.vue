@@ -1,51 +1,55 @@
 <template>
   <DashboardView />
   <div>
-    <h1>Update Land Holding</h1>
+    <h2>Update Land Holding</h2>
     <form @submit.prevent="updateLandHolding">
-      <div>
+      <div class="form-question">
         <label for="legalEntity">Legal Entity:</label>
         <input
           type="text"
           id="legalEntity"
+          class="text-area"
           v-model="updatedLandHolding.legalEntity"
           required
         />
       </div>
-      <div>
+      <div class="form-question">
         <label for="mineralOwnerRoyalty">Mineral Owner Royalty:</label>
         <input
           type="text"
           id="mineralOwnerRoyalty"
+          class="text-area"
           v-model="updatedLandHolding.mineralOwnerRoyalty"
           pattern="[0-9]"
           required
           @invalid="showNumberError2 = true"
           @input="showNumberError2 = false"
         />
-        <div v-if="showNumberError2" style="color: red">
+        <div v-if="showNumberError2" class="error-message">
           Input must be a number.
         </div>
       </div>
-      <div>
+      <div class="form-question">
         <label for="netMineralAcres">Net Mineral Acres:</label>
         <input
           type="text"
           id="netMineralAcres"
+          class="text-area"
           v-model="updatedLandHolding.netMineralAcres"
           required
           pattern="[0-9]"
           @invalid="showNumberError = true"
           @input="showNumberError = false"
         />
-        <div v-if="showNumberError" style="color: red">
+        <div v-if="showNumberError" class="error-message">
           Input must be a number.
         </div>
       </div>
-      <div>
+      <div class="form-question">
         <label for="section">Section:</label>
         <input
           type="text"
+          class="text-area"
           id="section"
           v-model="updatedLandHolding.section"
           pattern="[0-9]{3}"
@@ -53,29 +57,31 @@
           @invalid="showSectionError = true"
           @input="showSectionError = false"
         />
-        <div v-if="showSectionError" style="color: red">
+        <div v-if="showSectionError" class="error-message">
           Section must be a 3-digit number.
         </div>
       </div>
-      <div>
+      <div class="form-question">
         <label for="township">Township:</label>
         <input
           type="text"
           id="township"
+          class="text-area"
           v-model="updatedLandHolding.township"
           pattern="[0-9]{3}[nNsS]"
           required
           @invalid="showTownshipError = true"
           @input="showTownshipError = false"
         />
-        <div v-if="showTownshipError" style="color: red">
+        <div v-if="showTownshipError" class="error-message">
           Township must be a 3-digit number followed by 'N' or 'S'.
         </div>
       </div>
-      <div>
+      <div class="form-question">
         <label for="range">Range:</label>
         <input
           type="text"
+          class="text-area"
           id="range"
           v-model="updatedLandHolding.range"
           pattern="[0-9]{3}[eEwW]"
@@ -83,14 +89,15 @@
           @invalid="showRangeError = true"
           @input="showRangeError = false"
         />
-        <div v-if="showRangeError" style="color: red">
+        <div v-if="showRangeError" class="error-message">
           Range must be a 3-digit number followed by 'E' or 'W'.
         </div>
       </div>
-      <div>
+
+      <div class="form-question">
         <label for="titleSource">Title Source:</label>
         <div>
-          <label>
+          <div>
             <input
               type="radio"
               value="Class A"
@@ -98,8 +105,8 @@
               required
             />
             Class A
-          </label>
-          <label>
+          </div>
+          <div>
             <input
               type="radio"
               value="Class B"
@@ -107,8 +114,8 @@
               required
             />
             Class B
-          </label>
-          <label>
+          </div>
+          <div>
             <input
               type="radio"
               value="Class C"
@@ -116,8 +123,8 @@
               required
             />
             Class C
-          </label>
-          <label>
+          </div>
+          <div>
             <input
               type="radio"
               value="Class D"
@@ -125,7 +132,7 @@
               required
             />
             Class D
-          </label>
+          </div>
         </div>
       </div>
       <button class="button" type="submit">Update</button>
