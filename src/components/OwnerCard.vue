@@ -15,6 +15,7 @@
 export default {
   props: {
     owner: {
+      //Will be recieving the owner information as an object, this is what is being passed as props
       type: Object,
       required: true,
     },

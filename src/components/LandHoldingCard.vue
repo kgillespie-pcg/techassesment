@@ -23,6 +23,7 @@
 export default {
   props: {
     landHolding: {
+      //Will be recieving the land holding information as an object, this is what is being passed as props
       type: Object,
       required: true,
     },
