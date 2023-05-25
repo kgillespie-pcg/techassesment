@@ -2,13 +2,14 @@
   <DashboardView />
   <div>
     <div v-if="owner">
-      <h2>Viewing Owner: {{ owner.name }}</h2>
+      <h2><strong> Viewing Owner: </strong>{{ owner.name }}</h2>
       <div class="button-div">
         <button @click="deleteOwnerAndRedirect">Delete Owner</button>
-        <button @click="redirectToCreateLandholding">Create Landholding</button>
+        <button @click="redirectToCreateLandholding">Add Landholding</button>
         <button @click="redirectToUpdateOwner">Update Owner</button>
       </div>
       <div class="about-card">
+        <p><span>Name: </span> {{ owner.name }}</p>
         <p><span>Address: </span> {{ owner.address }}</p>
         <p><span>Owner Type: </span> {{ owner.ownerType }}</p>
         <p><span>Entity Type: </span> {{ owner.entityType }}</p>
@@ -25,7 +26,16 @@
           :key="landHolding._id"
         >
           <div class="content">
-            <p>Name: {{ landHolding.name }}</p>
+            <p><strong>Name: </strong>{{ landHolding.name }}</p>
+            <p>
+              <strong>Mineral Owner Royalty: </strong
+              >{{ landHolding.mineralOwnerRoyalty }}
+            </p>
+            <p>
+              <strong>Net Mineral Acres: </strong
+              >{{ landHolding.netMineralAcres }}
+            </p>
+            <p><strong>Title Source: </strong>{{ landHolding.titleSource }}</p>
             <!-- <p>Mineral Owner Royalty: {{ landHolding.mineralOwnerRoyalty }}</p>
             <p>Net Mineral Acres: {{ landHolding.netMineralAcres }}</p> -->
           </div>
@@ -37,8 +47,8 @@
           </button>
         </div>
       </div>
-      <div v-else>
-        <p>This owner has no land holdings</p>
+      <div class="card-container" v-else>
+        <p class="card">This owner has no land holdings</p>
       </div>
     </div>
   </div>

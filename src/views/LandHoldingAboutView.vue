@@ -1,27 +1,33 @@
 <template>
   <DashboardView />
   <div>
-    <h1>Land Holding About View</h1>
     <div v-if="landHolding">
-      <p>Name: {{ landHolding.name }}</p>
-      <p>Section Name: {{ landHolding.sectionName }}</p>
-      <p>Legal Entity: {{ landHolding.legalEntity }}</p>
-      <p>Mineral Owner Royalty: {{ landHolding.mineralOwnerRoyalty }}</p>
-      <p>Net Mineral Acres: {{ landHolding.netMineralAcres }}</p>
-
-      <p>Section: {{ landHolding.section }}</p>
-      <p>Township: {{ landHolding.township }}</p>
-      <p>Range: {{ landHolding.range }}</p>
-      <p>Title Source: {{ landHolding.titleSource }}</p>
-      <p>Id: {{ landHolding._id }}</p>
-      <p>Owner Id: {{ landHolding.ownerId }}</p>
-      <button @click="deleteLandHolding">Delete Land Holding</button>
-      <router-link :to="`/owner/${landHolding.ownerId}`">
-        <button>View Owner</button>
-      </router-link>
-      <router-link :to="`/update-landholding/${landHolding._id}`">
-        <button>Update Land Holding</button>
-      </router-link>
+      <h2><strong>Viewing Land Holding: </strong>{{ landHolding.name }}</h2>
+      <div class="button-div">
+        <button @click="deleteLandHolding">Delete Land Holding</button>
+        <router-link :to="`/owner/${landHolding.ownerId}`">
+          <button>View Owner</button>
+        </router-link>
+        <router-link :to="`/update-landholding/${landHolding._id}`">
+          <button>Update Land Holding</button>
+        </router-link>
+      </div>
+      <div class="about-card">
+        <p><span>Name: </span>{{ landHolding.name }}</p>
+        <p><span>Section Name: </span>{{ landHolding.sectionName }}</p>
+        <p><span>Legal Entity: </span>{{ landHolding.legalEntity }}</p>
+        <p>
+          <span>Mineral Owner Royalty: </span
+          >{{ landHolding.mineralOwnerRoyalty }}
+        </p>
+        <p>
+          <span>Net Mineral Acres: </span> {{ landHolding.netMineralAcres }}
+        </p>
+        <p><span>Section: </span> {{ landHolding.section }}</p>
+        <p><span>Township: </span> {{ landHolding.township }}</p>
+        <p><span>Range: </span> {{ landHolding.range }}</p>
+        <p><span>Title Source: </span> {{ landHolding.titleSource }}</p>
+      </div>
     </div>
   </div>
 </template>

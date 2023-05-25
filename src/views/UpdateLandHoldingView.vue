@@ -20,7 +20,7 @@
           id="mineralOwnerRoyalty"
           class="text-area"
           v-model="updatedLandHolding.mineralOwnerRoyalty"
-          pattern="[0-9]"
+          pattern="[0-9]+"
           required
           @invalid="showNumberError2 = true"
           @input="showNumberError2 = false"
@@ -37,7 +37,7 @@
           class="text-area"
           v-model="updatedLandHolding.netMineralAcres"
           required
-          pattern="[0-9]"
+          pattern="[0-9]+"
           @invalid="showNumberError = true"
           @input="showNumberError = false"
         />

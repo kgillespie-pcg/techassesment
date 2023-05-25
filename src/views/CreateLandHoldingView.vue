@@ -21,7 +21,7 @@
           class="text-area"
           v-model="landHolding.netMineralAcres"
           required
-          pattern="[0-9]"
+          pattern="[0-9]+"
           @invalid="showNumberError = true"
           @input="showNumberError = false"
         />
@@ -36,7 +36,7 @@
           id="mineralOwnerRoyalty"
           class="text-area"
           v-model="landHolding.mineralOwnerRoyalty"
-          pattern="[0-9]"
+          pattern="[0-9]+"
           required
           @invalid="showNumberError2 = true"
           @input="showNumberError2 = false"
@@ -101,6 +101,7 @@
               type="radio"
               value="Class A"
               v-model="landHolding.titleSource"
+              name="titleSource"
               required
             />
             Class A
@@ -110,6 +111,7 @@
               type="radio"
               value="Class B"
               v-model="landHolding.titleSource"
+              name="titleSource"
               required
             />
             Class B
@@ -119,6 +121,7 @@
               type="radio"
               value="Class C"
               v-model="landHolding.titleSource"
+              name="titleSource"
               required
             />
             Class C
@@ -128,12 +131,17 @@
               type="radio"
               value="Class D"
               v-model="landHolding.titleSource"
+              name="titleSource"
               required
             />
             Class D
           </div>
         </div>
+        <div v-if="!isTitleSourceSelected" class="error-message">
+          Please select a title source.
+        </div>
       </div>
+
       <button type="submit" class="button">Create</button>
     </form>
   </div>
@@ -184,6 +192,7 @@ export default {
         console.error("Failed to create land holding - vue:", error);
       }
     };
+
     return {
       landHolding,
       showSectionError,
@@ -195,6 +204,11 @@ export default {
     };
   },
   components: { DashboardView },
+  computed: {
+    isTitleSourceSelected() {
+      return !!this.landHolding.titleSource;
+    },
+  },
 };
 </script>
 
