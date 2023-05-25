@@ -82,7 +82,7 @@
             class="block w-full max-w-s mx-auto bg-gray-200 hover:bg-gray-300 focus:bg-gray-300 text-blue-900 rounded-lg px-3 py-3 font-semibold"
             @click.stop="$router.push('/signup')"
           >
-            Don't have and account yet? Signup here!
+            Don't have an account yet? Signup here!
           </button>
         </div>
       </div>
