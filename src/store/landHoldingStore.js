@@ -28,7 +28,7 @@ export const useLandHoldingStore = defineStore("landHolding", {
           .db("Kamary")
           .collection("Owners");
 
-        const sectionName = `${landHolding.township} - ${landHolding.section} - ${landHolding.range}`;
+        const sectionName = `${landHolding.section} - ${landHolding.township} - ${landHolding.range}`;
         const name = `${sectionName} - ${landHolding.legalEntity}`;
 
         const newLandHolding = {
@@ -138,7 +138,7 @@ export const useLandHoldingStore = defineStore("landHolding", {
           .db("Kamary")
           .collection("LandHoldings");
 
-        const sectionName = `${updatedLandHolding.township} - ${updatedLandHolding.section} - ${updatedLandHolding.range}`;
+        const sectionName = `${updatedLandHolding.section} - ${updatedLandHolding.township} - ${updatedLandHolding.range}`;
         const name = `${sectionName} - ${updatedLandHolding.legalEntity}`;
 
         const updatedLandHoldingObj = {
