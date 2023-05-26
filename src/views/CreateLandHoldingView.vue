@@ -68,7 +68,7 @@
           id="township"
           class="text-area"
           v-model="landHolding.township"
-          pattern="[0-9]{3}[nNsS]"
+          pattern="[0-9]{3}[NS]"
           required
           @invalid="showTownshipError = true"
           @input="showTownshipError = false"
@@ -84,7 +84,7 @@
           class="text-area"
           id="range"
           v-model="landHolding.range"
-          pattern="[0-9]{3}[eEwW]"
+          pattern="[0-9]{3}[EW]"
           required
           @invalid="showRangeError = true"
           @input="showRangeError = false"

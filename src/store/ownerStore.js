@@ -6,17 +6,23 @@ const {
   BSON: { ObjectId },
 } = Realm;
 
+// Define the owner store
 export const useOwnerStore = defineStore("owner", {
   state: () => ({
-    owners: [],
-    currentOwner: null,
+    owners: [], // Array to store fetched owners
+    currentOwner: null, // Current selected owner
   }),
   getters: {
     getCurrentOwner(state) {
-      return state.currentOwner;
+      return state.currentOwner; // Getter for the current owner
     },
   },
   actions: {
+    /**
+     * Retrieves an owner by ID from the database.
+     * @param {string} ownerId - The ID of the owner to retrieve.
+     * @returns {Object|null} - The fetched owner object or null if not found.
+     */
     async getOwnerById(ownerId) {
       try {
         const ownerCollection = realmApp.currentUser
@@ -34,26 +40,35 @@ export const useOwnerStore = defineStore("owner", {
         throw error;
       }
     },
+
+    /**
+     * Retrieves all owners from the database.
+     * @returns {Array} - The array of fetched owner objects.
+     */
     async getAllOwners() {
       try {
-        //console.log(ownerCollection)
         const ownerCollection = realmApp.currentUser
           .mongoClient("mongodb-atlas")
           .db("Kamary")
           .collection("Owners");
         console.log(ownerCollection);
         const owners = await ownerCollection.find();
-        this.owners = owners;
+        this.owners = owners; // Update the owners array in the store
 
         console.log("Fetched owner:", owners);
 
         return owners;
       } catch (error) {
-        console.error("Failed to get owner by ID:", error);
+        console.error("Failed to get owners:", error);
         throw error;
       }
     },
 
+    /**
+     * Creates a new owner in the database.
+     * @param {Object} owner - The owner object to create.
+     * @returns {Object} - The inserted owner object with its generated ID.
+     */
     async createOwner(owner) {
       try {
         const ownerCollection = realmApp.currentUser
@@ -95,6 +110,11 @@ export const useOwnerStore = defineStore("owner", {
       }
     },
 
+    /**
+     * Deletes an owner from the database.
+     * @param {string} ownerId - The ID of the owner to delete.
+     * @returns {Object} - The delete result object.
+     */
     async deleteOwner(ownerId) {
       try {
         const ownerCollection = realmApp.currentUser
@@ -127,10 +147,21 @@ export const useOwnerStore = defineStore("owner", {
         throw error;
       }
     },
+
+    /**
+     * Sets the current selected owner in the store.
+     * @param {Object} owner - The owner object to set as current.
+     */
     async setCurrentOwner(owner) {
       this.currentOwner = owner;
     },
 
+    /**
+     * Updates an owner in the database.
+     * @param {string} ownerId - The ID of the owner to update.
+     * @param {Object} updatedOwner - The updated owner object.
+     * @returns {Object} - The update result object.
+     */
     async updateOwner(ownerId, updatedOwner) {
       try {
         const ownerCollection = realmApp.currentUser
